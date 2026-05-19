@@ -1,0 +1,41 @@
+{% extends 'hospital/base.html' %}
+{% block title %}Blood Availability – Hospital{% endblock %}
+{% block hospital_content %}
+<div class="topbar"><h2>Blood Availability</h2><span class="tag">Hospital Portal</span></div>
+<div class="page-content">
+  <div class="table-section" style="margin-bottom:24px;">
+    <div class="table-header"><h3>Current Blood Stock</h3></div>
+    <div style="padding:20px;">
+      <div class="blood-inv-grid">
+        {% for row in inventory %}
+        <div class="blood-inv-card {{ 'low' if row['status']=='Low Stock' else '' }}">
+          <div class="type">{{ row['BloodType'] }}</div>
+          <div class="qty">{{ row['Quantity'] }} units{% if row['status']=='Low Stock' %} ⚠ Low Stock{% endif %}</div>
+          <div class="blood-bar"><div class="blood-fill" style="width:{{ [row['Quantity'],100]|min }}%"></div></div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="table-section">
+    <div class="table-header"><h3>All Blood Types</h3></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Blood ID</th><th>Blood Type</th><th>Quantity</th><th>Entry Date</th><th>Status</th></tr></thead>
+        <tbody>
+          {% for row in inventory %}
+          <tr>
+            <td>BI{{ row['BloodId'] }}</td>
+            <td>{{ row['BloodType'] }}</td>
+            <td>{{ row['Quantity'] }} units</td>
+            <td>{{ row['EntryDate'] }}</td>
+            <td><span class="badge {{ 'available' if row['status']=='Available' else 'low' }}">{{ row['status'] }}</span></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

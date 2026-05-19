@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}About – Blood Management System{% endblock %}
+{% block body %}
+<nav class="navbar">
+  <a class="nav-brand" href="{{ url_for('index') }}"><span class="drop"></span> Blood Bank</a>
+  <div class="nav-links">
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('about') }}" class="active">About</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
+    <a href="{{ url_for('login') }}" class="btn-login">Login</a>
+  </div>
+</nav>
+<div class="page-hero">
+  <h1>About This System</h1>
+  <p>A comprehensive blood bank management platform built to connect donors, hospitals, and administrators seamlessly.</p>
+</div>
+<div class="page-body">
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="icon">🩸</div>
+      <h3>Live Inventory</h3>
+      <p>Real-time blood stock tracking with automatic low-stock alerts when units fall below 20.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🏥</div>
+      <h3>Hospital Portal</h3>
+      <p>Hospitals can submit blood requests, check availability, and track request approval status.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">👤</div>
+      <h3>Donor Records</h3>
+      <p>Complete donor management with blood type, medical history, and donation tracking.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">✅</div>
+      <h3>Request Approval</h3>
+      <p>Admin approves or rejects requests. Inventory auto-deducts upon approval.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">📊</div>
+      <h3>Admin Dashboard</h3>
+      <p>Central overview of all donors, hospitals, inventory, and pending requests.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🔒</div>
+      <h3>Role-Based Access</h3>
+      <p>Separate portals for admins and hospitals with secure session management.</p>
+    </div>
+  </div>
+  <div style="margin-top:40px; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:28px;">
+    <h3 style="font-family:var(--font-display); font-size:18px; font-weight:800; margin-bottom:10px;">Project Info</h3>
+    <p style="color:var(--muted); font-size:13px;">Built by Saijan Khan &amp; Faijan Qureshi · Guide: Pravin Mishra</p>
+    <p style="color:var(--muted); font-size:13px; margin-top:6px;">Tech Stack: Python · Flask · SQLite · HTML/CSS</p>
+  </div>
+</div>
+<footer class="footer">&copy; 2026 Blood Management System</footer>
+{% endblock %}

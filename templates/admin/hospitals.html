@@ -1,0 +1,39 @@
+{% extends 'admin/base.html' %}
+{% block title %}Hospitals – Admin{% endblock %}
+{% block admin_content %}
+<div class="topbar"><h2>Registered Hospitals</h2><span class="tag">Admin</span></div>
+<div class="page-content">
+  {% if msg == 'registered' %}<div class="success-msg">Hospital registered successfully!</div>{% endif %}
+  {% if msg == 'updated' %}<div class="success-msg">Hospital updated successfully!</div>{% endif %}
+  {% if msg == 'deleted' %}<div class="error-msg">Hospital removed.</div>{% endif %}
+
+  <div class="table-section">
+    <div class="table-header">
+      <h3>All Hospitals</h3>
+      <a href="{{ url_for('register_hospital') }}" class="btn-add">+ Register Hospital</a>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>Hospital Name</th><th>Contact Person</th><th>Phone</th><th>Email</th><th>Address</th><th>Actions</th></tr></thead>
+        <tbody>
+          {% for h in hospitals %}
+          <tr>
+            <td>H{{ h['H_id'] }}</td>
+            <td>{{ h['H_name'] }}</td>
+            <td>{{ h['H_con_person'] }}</td>
+            <td>{{ h['H_contact'] }}</td>
+            <td>{{ h['H_email'] }}</td>
+            <td>{{ h['H_address'] }}</td>
+            <td>
+              <a href="{{ url_for('edit_hospital', hid=h['H_id']) }}" class="btn-action">Edit</a>
+              <a href="{{ url_for('delete_hospital', hid=h['H_id']) }}" class="btn-action danger"
+                 onclick="return confirm('Remove this hospital?')">Remove</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'admin/base.html' %}
+{% block title %}Dashboard – Admin{% endblock %}
+{% block admin_content %}
+<div class="topbar">
+  <h2>Dashboard</h2>
+  <span class="tag">System Online</span>
+</div>
+<div class="page-content">
+
+  <div class="stat-cards">
+    <div class="stat-card">
+      <div class="label">Total Donors</div>
+      <div class="value">{{ donors }}</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="label">Hospitals</div>
+      <div class="value">{{ hosps }}</div>
+    </div>
+    <div class="stat-card green">
+      <div class="label">Blood Units</div>
+      <div class="value">{{ units }}</div>
+    </div>
+    <div class="stat-card amber">
+      <div class="label">Pending Requests</div>
+      <div class="value">{{ pending }}</div>
+    </div>
+  </div>
+
+  <!-- Blood Inventory Grid -->
+  <div class="table-section" style="margin-bottom:24px;">
+    <div class="table-header">
+      <h3>Blood Type Inventory</h3>
+      <a href="{{ url_for('admin_inventory') }}" class="btn-add">Manage →</a>
+    </div>
+    <div style="padding:16px;">
+      <div class="blood-inv-grid">
+        {% for row in inventory %}
+        <div class="blood-inv-card {{ 'low' if row['status']=='Low Stock' else '' }}">
+          <div class="type">{{ row['BloodType'] }}</div>
+          <div class="qty">{{ row['Quantity'] }} units{% if row['status']=='Low Stock' %} ⚠{% endif %}</div>
+          <div class="blood-bar"><div class="blood-fill" style="width:{{ [row['Quantity'],100]|min }}%"></div></div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Requests -->
+  <div class="table-section">
+    <div class="table-header">
+      <h3>Recent Blood Requests</h3>
+      <a href="{{ url_for('admin_requests') }}" class="btn-add">View All</a>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Hospital</th><th>Blood Type</th><th>Quantity</th><th>Fulfill By</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          {% for row in recent %}
+          <tr>
+            <td>{{ row['H_name'] }}</td>
+            <td>{{ row['H_R_BloodGrp'] }}</td>
+            <td>{{ row['Requested_qnt'] }} units</td>
+            <td>{{ row['Fulfill_till'] }}</td>
+            <td><span class="badge {{ row['status']|lower }}">{{ row['status'] }}</span></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

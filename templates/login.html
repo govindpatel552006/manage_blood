@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Login – Blood Management System{% endblock %}
+{% block body %}
+<nav class="navbar">
+  <a class="nav-brand" href="{{ url_for('index') }}">
+    <span class="drop"></span> Blood Bank
+  </a>
+  <div class="nav-links">
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
+  </div>
+</nav>
+
+<div style="min-height:82vh; display:flex; align-items:center; justify-content:center; padding:30px;">
+  <div class="form-wrap">
+    <h2>Welcome Back</h2>
+    <p>Select your role and sign in to the system</p>
+
+    <div class="login-tabs">
+      <button class="login-tab {{ 'active' if login_type=='admin' else '' }}" onclick="setTab('admin')">🛡 Admin</button>
+      <button class="login-tab {{ 'active' if login_type=='hospital' else '' }}" onclick="setTab('hospital')">🏥 Hospital</button>
+    </div>
+
+    {% if error %}<div class="error-msg">{{ error }}</div>{% endif %}
+
+    <div id="demo-admin" class="demo-box" style="{{ 'display:none' if login_type=='hospital' else '' }}">
+      <strong>Admin Demo:</strong> Username: <strong>admin</strong> &nbsp;|&nbsp; Password: <strong>admin123</strong>
+    </div>
+    <div id="demo-hospital" class="demo-box" style="{{ 'display:none' if login_type=='admin' else '' }}">
+      <strong>Hospital Demo:</strong> Email: <strong>city@hosp.in</strong> &nbsp;|&nbsp; Password: <strong>hosp123</strong>
+    </div>
+
+    <form method="POST">
+      <input type="hidden" name="login_type" id="login_type" value="{{ login_type }}">
+
+      <div id="field-admin" style="{{ 'display:none' if login_type=='hospital' else '' }}">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" name="username" placeholder="Enter username" value="admin">
+        </div>
+      </div>
+      <div id="field-hospital" style="{{ 'display:none' if login_type=='admin' else '' }}">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="Hospital email" value="city@hosp.in">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" id="pass-field"
+               placeholder="Enter password" value="{{ 'admin123' if login_type=='admin' else 'hosp123' }}">
+      </div>
+      <button type="submit" class="btn-submit">Sign In →</button>
+    </form>
+  </div>
+</div>
+
+<footer class="footer">&copy; 2026 Blood Management System</footer>
+{% endblock %}
+{% block script %}
+function setTab(type) {
+  document.getElementById('login_type').value = type;
+  document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  if (type === 'admin') {
+    document.getElementById('field-admin').style.display = '';
+    document.getElementById('field-hospital').style.display = 'none';
+    document.getElementById('demo-admin').style.display = '';
+    document.getElementById('demo-hospital').style.display = 'none';
+    document.getElementById('pass-field').value = 'admin123';
+  } else {
+    document.getElementById('field-admin').style.display = 'none';
+    document.getElementById('field-hospital').style.display = '';
+    document.getElementById('demo-admin').style.display = 'none';
+    document.getElementById('demo-hospital').style.display = '';
+    document.getElementById('pass-field').value = 'hosp123';
+  }
+}
+{% endblock %}

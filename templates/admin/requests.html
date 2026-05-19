@@ -1,0 +1,39 @@
+{% extends 'admin/base.html' %}
+{% block title %}Requests – Admin{% endblock %}
+{% block admin_content %}
+<div class="topbar"><h2>Blood Requests</h2><span class="tag">Admin</span></div>
+<div class="page-content">
+  {% if msg == 'approved' %}<div class="success-msg">Request approved and inventory updated!</div>{% endif %}
+  {% if msg == 'deleted' %}<div class="error-msg">Request deleted.</div>{% endif %}
+  {% if msg == 'insufficient' %}<div class="error-msg">Insufficient blood stock to approve this request.</div>{% endif %}
+
+  <div class="table-section">
+    <div class="table-header"><h3>All Blood Requests</h3></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Req ID</th><th>Hospital</th><th>Blood Type</th><th>Quantity</th><th>Fulfill By</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+          {% for row in requests %}
+          <tr>
+            <td>R{{ row['H_R_id'] }}</td>
+            <td>{{ row['H_name'] }}</td>
+            <td>{{ row['H_R_BloodGrp'] }}</td>
+            <td>{{ row['Requested_qnt'] }} units</td>
+            <td>{{ row['Fulfill_till'] }}</td>
+            <td><span class="badge {{ row['status']|lower }}">{{ row['status'] }}</span></td>
+            <td>
+              {% if row['status'] == 'Pending' %}
+              <a href="{{ url_for('approve_request', rid=row['H_R_id']) }}" class="btn-action approve"
+                 onclick="return confirm('Approve and deduct from inventory?')">Approve</a>
+              {% endif %}
+              <a href="{{ url_for('delete_request', rid=row['H_R_id']) }}" class="btn-action danger"
+                 onclick="return confirm('Delete this request?')">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

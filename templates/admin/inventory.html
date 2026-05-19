@@ -1,0 +1,38 @@
+{% extends 'admin/base.html' %}
+{% block title %}Inventory – Admin{% endblock %}
+{% block admin_content %}
+<div class="topbar"><h2>Blood Inventory</h2><span class="tag">Admin</span></div>
+<div class="page-content">
+  {% if msg == 'added' %}<div class="success-msg">Inventory entry added successfully!</div>{% endif %}
+  {% if msg == 'updated' %}<div class="success-msg">Inventory updated successfully!</div>{% endif %}
+  {% if msg == 'deleted' %}<div class="error-msg">Inventory entry deleted.</div>{% endif %}
+
+  <div class="table-section">
+    <div class="table-header">
+      <h3>All Blood Inventory</h3>
+      <a href="{{ url_for('add_inventory') }}" class="btn-add">+ Add Blood Stock</a>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Blood ID</th><th>Blood Type</th><th>Quantity (units)</th><th>Entry Date</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
+          {% for row in inventory %}
+          <tr>
+            <td>BI{{ row['BloodId'] }}</td>
+            <td>{{ row['BloodType'] }}</td>
+            <td>{{ row['Quantity'] }}</td>
+            <td>{{ row['EntryDate'] }}</td>
+            <td><span class="badge {{ 'available' if row['status']=='Available' else 'low' }}">{{ row['status'] }}</span></td>
+            <td>
+              <a href="{{ url_for('edit_inventory', bid=row['BloodId']) }}" class="btn-action">Update</a>
+              <a href="{{ url_for('delete_inventory', bid=row['BloodId']) }}" class="btn-action danger"
+                 onclick="return confirm('Delete this entry?')">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

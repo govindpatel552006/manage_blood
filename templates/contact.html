@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Contact – Blood Management System{% endblock %}
+{% block body %}
+<nav class="navbar">
+  <a class="nav-brand" href="{{ url_for('index') }}"><span class="drop"></span> Blood Bank</a>
+  <div class="nav-links">
+    <a href="{{ url_for('index') }}">Home</a>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('contact') }}" class="active">Contact</a>
+    <a href="{{ url_for('login') }}" class="btn-login">Login</a>
+  </div>
+</nav>
+<div class="page-hero">
+  <h1>Contact Us</h1>
+  <p>Get in touch with the Blood Bank management team for support or queries.</p>
+</div>
+<div class="page-body">
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; max-width:800px;">
+    <div class="feature-card">
+      <div class="icon">📍</div>
+      <h3>Location</h3>
+      <p>Bilaspur, Chhattisgarh, India</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">📞</div>
+      <h3>Phone</h3>
+      <p>+91 98765 43210</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">📧</div>
+      <h3>Email</h3>
+      <p>admin@bloodbank.in</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🕐</div>
+      <h3>Hours</h3>
+      <p>24 × 7 Emergency Support</p>
+    </div>
+  </div>
+</div>
+<footer class="footer">&copy; 2026 Blood Management System</footer>
+{% endblock %}

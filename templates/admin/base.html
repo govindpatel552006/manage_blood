@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-name">🩸 Blood Bank</div>
+      <div class="brand-role">{{ session.get('admin_username','Admin') }} · Admin</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Overview</div>
+      <a href="{{ url_for('admin_dashboard') }}" class="sidebar-link {{ 'active' if request.endpoint=='admin_dashboard' else '' }}">
+        <span class="icon">📊</span> Dashboard
+      </a>
+
+      <div class="nav-section">Manage</div>
+      <a href="{{ url_for('admin_donors') }}" class="sidebar-link {{ 'active' if 'donor' in request.endpoint else '' }}">
+        <span class="icon">👤</span> Donors
+      </a>
+      <a href="{{ url_for('admin_hospitals') }}" class="sidebar-link {{ 'active' if 'hospital' in request.endpoint else '' }}">
+        <span class="icon">🏥</span> Hospitals
+      </a>
+      <a href="{{ url_for('admin_inventory') }}" class="sidebar-link {{ 'active' if 'inventory' in request.endpoint else '' }}">
+        <span class="icon">🩸</span> Inventory
+      </a>
+      <a href="{{ url_for('admin_requests') }}" class="sidebar-link {{ 'active' if 'request' in request.endpoint else '' }}">
+        <span class="icon">📋</span> Requests
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="{{ url_for('logout') }}" class="sidebar-link">
+        <span class="icon">🚪</span> Logout
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="admin-main">
+    {% block admin_content %}{% endblock %}
+  </main>
+</div>
+{% endblock %}

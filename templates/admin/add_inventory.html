@@ -1,0 +1,24 @@
+{% extends 'admin/base.html' %}
+{% block title %}Add Inventory – Admin{% endblock %}
+{% block admin_content %}
+<div class="topbar"><h2>Add Blood Stock</h2><span class="tag">Admin</span></div>
+<div class="page-content">
+  {% if error %}<div class="error-msg">{{ error }}</div>{% endif %}
+  <div class="form-page-wrap" style="max-width:400px;">
+    <form method="POST">
+      <div class="form-group"><label>Blood Type *</label>
+        <select name="blood_type" required><option value="">Select</option>
+        {% for b in ['A+','A-','B+','B-','O+','O-','AB+','AB-'] %}<option>{{ b }}</option>{% endfor %}
+        </select></div>
+      <div class="form-group"><label>Quantity (units) *</label>
+        <input type="number" name="quantity" min="1" placeholder="Number of units" required></div>
+      <div class="form-group"><label>Entry Date</label>
+        <input type="date" name="entry_date" value="{{ today }}"></div>
+      <div style="display:flex; gap:10px; margin-top:8px;">
+        <button type="submit" class="btn btn-primary">Add Stock</button>
+        <a href="{{ url_for('admin_inventory') }}" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

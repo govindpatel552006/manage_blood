@@ -1,0 +1,28 @@
+{% extends 'admin/base.html' %}
+{% block title %}Edit Inventory – Admin{% endblock %}
+{% block admin_content %}
+<div class="topbar"><h2>Update Inventory</h2><span class="tag">Admin</span></div>
+<div class="page-content">
+  {% if error %}<div class="error-msg">{{ error }}</div>{% endif %}
+  <div class="form-page-wrap" style="max-width:400px;">
+    <form method="POST">
+      <div class="form-group">
+        <label>Blood Type</label>
+        <input type="text" value="{{ item['BloodType'] }}" disabled
+               style="background:var(--surface2); opacity:.6;">
+      </div>
+      <div class="form-group"><label>New Quantity (units) *</label>
+        <input type="number" name="quantity" value="{{ item['Quantity'] }}" min="0" required></div>
+      <div class="form-group"><label>Entry Date</label>
+        <input type="date" name="entry_date" value="{{ item['EntryDate'] }}"></div>
+      <p style="font-size:12px; color:var(--muted); margin-bottom:16px;">
+        Status will auto-update: &lt;20 units → Low Stock, ≥20 → Available
+      </p>
+      <div style="display:flex; gap:10px; margin-top:8px;">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="{{ url_for('admin_inventory') }}" class="btn btn-outline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

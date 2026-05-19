@@ -1,0 +1,30 @@
+{% extends 'hospital/base.html' %}
+{% block title %}My Requests – Hospital{% endblock %}
+{% block hospital_content %}
+<div class="topbar"><h2>My Requests</h2><span class="tag">Hospital Portal</span></div>
+<div class="page-content">
+  <div class="table-section">
+    <div class="table-header"><h3>Your Blood Requests</h3>
+      <a href="{{ url_for('hospital_request') }}" class="btn-add">+ New Request</a>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Req ID</th><th>Blood Type</th><th>Quantity</th><th>Fulfill By</th><th>Status</th></tr></thead>
+        <tbody>
+          {% for row in requests %}
+          <tr>
+            <td>R{{ row['H_R_id'] }}</td>
+            <td>{{ row['H_R_BloodGrp'] }}</td>
+            <td>{{ row['Requested_qnt'] }} units</td>
+            <td>{{ row['Fulfill_till'] }}</td>
+            <td><span class="badge {{ row['status']|lower }}">{{ row['status'] }}</span></td>
+          </tr>
+          {% else %}
+          <tr><td colspan="5" style="text-align:center; color:var(--muted); padding:28px;">No requests yet. <a href="{{ url_for('hospital_request') }}" style="color:var(--red);">Submit one →</a></td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

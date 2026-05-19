@@ -1,0 +1,40 @@
+{% extends 'admin/base.html' %}
+{% block title %}Donors – Admin{% endblock %}
+{% block admin_content %}
+<div class="topbar"><h2>Donor List</h2><span class="tag">Admin</span></div>
+<div class="page-content">
+  {% if msg == 'added' %}<div class="success-msg">Donor registered successfully!</div>{% endif %}
+  {% if msg == 'updated' %}<div class="success-msg">Donor updated successfully!</div>{% endif %}
+  {% if msg == 'deleted' %}<div class="error-msg">Donor deleted.</div>{% endif %}
+
+  <div class="table-section">
+    <div class="table-header">
+      <h3>All Donors</h3>
+      <a href="{{ url_for('register_donor') }}" class="btn-add">+ Register Donor</a>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>Name</th><th>Blood Type</th><th>Age</th><th>Gender</th><th>Contact</th><th>Last Donation</th><th>Actions</th></tr></thead>
+        <tbody>
+          {% for d in donors %}
+          <tr>
+            <td>D{{ d['D_id'] }}</td>
+            <td>{{ d['D_name'] }}</td>
+            <td>{{ d['D_bloodtype'] }}</td>
+            <td>{{ d['D_age'] }}</td>
+            <td>{{ d['D_gender'] }}</td>
+            <td>{{ d['D_contact'] }}</td>
+            <td>{{ d['D_Last_Donation'] or '—' }}</td>
+            <td>
+              <a href="{{ url_for('edit_donor', did=d['D_id']) }}" class="btn-action">Edit</a>
+              <a href="{{ url_for('delete_donor', did=d['D_id']) }}" class="btn-action danger"
+                 onclick="return confirm('Delete this donor?')">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

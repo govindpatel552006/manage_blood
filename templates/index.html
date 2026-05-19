@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Home – Blood Management System{% endblock %}
+{% block body %}
+<nav class="navbar">
+  <a class="nav-brand" href="{{ url_for('index') }}">
+    <span class="drop"></span> Blood Bank
+  </a>
+  <div class="nav-links">
+    <a href="{{ url_for('index') }}" class="active">Home</a>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
+    <a href="{{ url_for('login') }}" class="btn-login">Login</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-label">🩸 Life-Saving System</div>
+  <h1>Manage Blood.<br><em>Save Lives.</em></h1>
+  <p>A centralised system for blood inventory, donor records, and hospital requests — real-time, always available.</p>
+  <div class="hero-btns">
+    <a href="{{ url_for('login') }}" class="btn btn-primary">Access Portal →</a>
+    <a href="{{ url_for('about') }}" class="btn btn-outline">Learn More</a>
+  </div>
+</section>
+
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="label">Total Donors</div>
+    <div class="value">{{ donors }}</div>
+  </div>
+  <div class="stat-card green">
+    <div class="label">Blood Units</div>
+    <div class="value">{{ units }}</div>
+  </div>
+  <div class="stat-card blue">
+    <div class="label">Hospitals</div>
+    <div class="value">{{ hosps }}</div>
+  </div>
+</div>
+
+<div class="blood-grid-wrap">
+  <div class="section-title">Live Blood Availability</div>
+  <div class="blood-inv-grid">
+    {% for row in inventory %}
+    <div class="blood-inv-card {{ 'low' if row['status']=='Low Stock' else '' }}">
+      <div class="type">{{ row['BloodType'] }}</div>
+      <div class="qty">{{ row['Quantity'] }} units{% if row['status']=='Low Stock' %} ⚠ Low{% endif %}</div>
+      <div class="blood-bar"><div class="blood-fill" style="width:{{ [row['Quantity'],100]|min }}%"></div></div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<footer class="footer">
+  &copy; 2026 Blood Management System &nbsp;·&nbsp; Bilaspur, CG
+</footer>
+{% endblock %}

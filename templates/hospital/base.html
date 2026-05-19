@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-name">🏥 Hospital Portal</div>
+      <div class="brand-role">{{ session.get('hospital_name','Hospital') }}</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Blood Services</div>
+      <a href="{{ url_for('hospital_request') }}" class="sidebar-link {{ 'active' if request.endpoint=='hospital_request' else '' }}">
+        <span class="icon">🩸</span> Request Blood
+      </a>
+      <a href="{{ url_for('hospital_my_requests') }}" class="sidebar-link {{ 'active' if request.endpoint=='hospital_my_requests' else '' }}">
+        <span class="icon">📋</span> My Requests
+      </a>
+      <a href="{{ url_for('hospital_availability') }}" class="sidebar-link {{ 'active' if request.endpoint=='hospital_availability' else '' }}">
+        <span class="icon">📊</span> Availability
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="{{ url_for('logout') }}" class="sidebar-link">
+        <span class="icon">🚪</span> Logout
+      </a>
+    </div>
+  </aside>
+  <main class="admin-main">
+    {% block hospital_content %}{% endblock %}
+  </main>
+</div>
+{% endblock %}
